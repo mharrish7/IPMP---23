@@ -1,28 +1,9 @@
-#User function Template for python3
-
-class Solution:
-    def maxPathSum(self, root):
-        
-        res = 0
-        def rec(root,sum):
-            if not root:
-                res = max(res,sum[0])
-                return
-            
-            rec(root.left,[sum[0]+root.data])
-            rec(root.right,[sum[0]+root.data])
-            
-        
-        rec(root,[0])
-        
-        return res
-
-
 #{ 
  # Driver Code Starts
 #Initial Template for Python 3
 
-
+import sys
+sys.setrecursionlimit(50000)
 from collections import deque
 # Tree Node
 class Node:
@@ -30,6 +11,14 @@ class Node:
         self.right = None
         self.data = val
         self.left = None
+
+'''
+class Node:
+    def __init__(self, val):
+        self.right = None
+        self.data = val
+        self.left = None
+'''
 
 # Function to Build Tree   
 def buildTree(s):
@@ -88,14 +77,58 @@ def buildTree(s):
         i=i+1
     return root
     
-    
+
+# } Driver Code Ends
+#User function Template for python3
+
+'''
+# Node Class:
+class Node:
+    def __init__(self,val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+class Solution:
+    def Ancestors(self, root,target):
+        R = []
+        def rec(root,target):
+            
+            if root.data == target:
+                return True 
+            
+            
+            t1,t2 = False,False 
+            
+            if root.left:
+                t1 = rec(root.left,target)
+            
+            if root.right:
+                t2 = rec(root.right,target)
+            
+            
+            if t1 or t2:
+                R.append(root.data)
+                return True
+            return False
+        rec(root,target)
+        return R
+            
+        
+        
+
+#{ 
+ # Driver Code Starts.
 if __name__=="__main__":
     t=int(input())
     for _ in range(0,t):
         s=input()
         root=buildTree(s)
-        ob= Solution()
-        
-        print(ob.maxPathSum(root))
+        target=int(input())
+        nodes = Solution().Ancestors(root, target)
+        for node in nodes:
+            print(node,end=' ')
+        print()
+
 
 # } Driver Code Ends
